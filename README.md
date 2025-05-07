@@ -23,3 +23,13 @@ O código realiza as seguintes etapas:
 * **`SOUND_THRESHOLD`:** Este valor define a sensibilidade à detecção de som. Você **precisará ajustar este valor** com base nas características do seu microfone e no nível de ruído ambiente. Monitore os valores do ADC no Serial Monitor (ativado no `stdio_init_all()`) em repouso e quando houver som para encontrar um limiar adequado. Um valor inicial baixo como 2100 pode precisar ser aumentado significativamente.
 * Para projetos maiores com muitos Neopixels, é crucial usar uma fonte de alimentação externa para evitar sobrecarregar a porta USB do Raspberry Pi Pico.
 * O código inclui `printf` para depuração, que envia informações para o Serial Monitor. Conecte um terminal serial (ex: usando `screen /dev/ttyACM0 115200` no Linux ou PuTTY no Windows) para visualizar essas mensagens.
+
+
+
+
+
+
+
+
+
+
