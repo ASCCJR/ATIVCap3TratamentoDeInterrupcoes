@@ -1,6 +1,6 @@
 # ATIVCap3TratamentoDeInterrupcoes
 
-# Detecção de Som com Matriz Neopixel (Raspberry Pi Pico)
+# Matriz de NeoPixel Ativada por Som
 
 Este projeto demonstra como usar o Raspberry Pi Pico para detectar sons através de um microfone analógico e controlar uma matriz de LEDs Neopixel com base na intensidade do som detectado. Quando o nível de som captado pelo microfone ultrapassa um determinado limiar, todos os LEDs da matriz acendem em branco. Abaixo desse limiar, os LEDs permanecem apagados.
 
@@ -18,15 +18,21 @@ O código realiza as seguintes etapas:
     * Se o valor do ADC estiver abaixo do limiar, a função `fill_matrix()` é chamada para apagar todos os LEDs da matriz (cor preta).
 7.  **Loop Principal:** O programa entra em um loop infinito, com a lógica principal de leitura do microfone e controle dos LEDs sendo executada na função de callback do timer.
 
+## 🎯 Funcionamento
+1. **Leitura do Som**  
+   📢 O ADC lê continuamente o microfone a cada 50ms (20 leituras/segundo).
+
+2. **Detecção de Pico**  
+   🔔 Se o valor ultrapassar `SOUND_THRESHOLD` (padrão: 2100), aciona os LEDs.
+
+3. **Feedback Visual**  
+   💡 Todos os LEDs brilham em branco enquanto o som persiste acima do limiar.
+
 ## Notas
 
 * **`SOUND_THRESHOLD`:** Este valor define a sensibilidade à detecção de som. Você **precisará ajustar este valor** com base nas características do seu microfone e no nível de ruído ambiente. Monitore os valores do ADC no Serial Monitor (ativado no `stdio_init_all()`) em repouso e quando houver som para encontrar um limiar adequado. Um valor inicial baixo como 2100 pode precisar ser aumentado significativamente.
 * Para projetos maiores com muitos Neopixels, é crucial usar uma fonte de alimentação externa para evitar sobrecarregar a porta USB do Raspberry Pi Pico.
 * O código inclui `printf` para depuração, que envia informações para o Serial Monitor. Conecte um terminal serial (ex: usando `screen /dev/ttyACM0 115200` no Linux ou PuTTY no Windows) para visualizar essas mensagens.
-
-
-
-
 
 
 
