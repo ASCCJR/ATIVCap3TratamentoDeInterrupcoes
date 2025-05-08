@@ -1,5 +1,5 @@
 /**
- * Código para Raspberry Pi Pico: Detecção de Som com Matriz LED WS2812
+ * Código para Raspberry Pi Pico: Detecção de Som com Matriz LED WS2812 para Atividade Cap 3
  * 
  * REQUISITOS CUMPRIDOS:
  * ✅ Leitura do microfone via ADC (GPIO28/ADC2)
