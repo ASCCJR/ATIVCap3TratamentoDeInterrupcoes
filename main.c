@@ -120,19 +120,24 @@
      // Atualiza a animação apenas se houver som detectado recentemente
      // REQUISITO CUMPRIDO: Verificação do limiar de som ✅
      if (sound_level > SOUND_THRESHOLD) {
+         // FLUXO: Som acima do limiar detectado - ativa a animação
          last_sound_time = current_time;
          sound_detected = true;
      } else if (current_time - last_sound_time > 1000) { // Desliga após 1 segundo sem som alto
+         // FLUXO: Sem som alto por mais de 1 segundo - desliga a animação
          sound_detected = false;
      }
      
      // Se o som não foi detectado, apaga todos os LEDs
      if (!sound_detected) {
+         // FLUXO: Desligando todos os LEDs pois não há som alto
          for (uint8_t i = 0; i < NUM_PIXELS; i++) {
              put_pixel(0);  // Desliga o LED
          }
          return;
      }
+     
+     // FLUXO: Gerando animação baseada no som detectado
      
      // Calcular a hue base baseada no nível de som (mapeando para 0-360)
      float base_hue = (sound_level * 360.0f) / 4095.0f;
@@ -174,6 +179,8 @@
   * REQUISITO CUMPRIDO: Uso de timer periódico com callback ✅
   */
  bool repeating_timer_callback(struct repeating_timer *t) {
+     // FLUXO: Timer disparou - iniciando leitura do microfone
+     
      // Seleciona o canal do ADC conectado ao microfone
      adc_select_input(AUDIO_ADC_CHANNEL);
      
@@ -184,10 +191,10 @@
      // Atualiza o último nível de som detectado
      last_sound_level = raw_adc;
  
-     // Imprime o valor lido no monitor serial para depuração
-     printf("ADC Value: %d\n", raw_adc);
+     // FLUXO: Leitura ADC concluída com valor: raw_adc (seria exibido no printf)
  
      // Renderiza a animação com base no nível de som
+     // FLUXO: Enviando valor do ADC para processamento da animação
      render_wave_animation(raw_adc);
  
      // Retorna true para que o timer continue rodando periodicamente
@@ -198,34 +205,38 @@
   * Função principal - inicializa o sistema e entra em loop infinito
   */
  int main() {
-     // Inicializa o Standard I/O (stdio) para usar printf
+     // Inicializa o Standard I/O (stdio)
      stdio_init_all();
  
-     printf("Iniciando detecção de som com animação de Neopixels...\n");
+     // FLUXO: Iniciando sistema de detecção de som com animação de Neopixels
  
      // --- Configuração do ADC ---
      // REQUISITO CUMPRIDO: Configuração do ADC para leitura do microfone ✅
+     // FLUXO: Inicializando ADC para leitura do microfone
      adc_init();
      adc_gpio_init(AUDIO_INPUT_PIN);
  
      // --- Configuração do PIO para Neopixels ---
      // REQUISITO CUMPRIDO: Configuração para controle da matriz WS2812 ✅
+     // FLUXO: Configurando PIO para controle da matriz WS2812
      uint offset = pio_add_program(pio, &ws2812_program);
      sm = pio_claim_unused_sm(pio, true);
      ws2812_program_init(pio, sm, offset, NEOPIXEL_PIN, 800000, false);
  
      // --- Configuração do Timer Periódico ---
      // REQUISITO CUMPRIDO: Configuração do timer periódico ✅
+     // FLUXO: Configurando timer periódico para leitura do ADC
      struct repeating_timer timer;
      if (!add_repeating_timer_ms(TIMER_INTERVAL_MS, repeating_timer_callback, NULL, &timer)) {
-         printf("Erro: Falha ao adicionar o timer repetitivo!\n");
+         // FLUXO: ERRO - Falha ao adicionar o timer repetitivo
          return 1;
      }
  
-     printf("Sistema inicializado. Monitorando microfone...\n");
+     // FLUXO: Sistema inicializado com sucesso. Monitorando microfone...
  
      // Loop principal
      while (1) {
+         // FLUXO: Loop principal em execução
          tight_loop_contents();
      }
  
