@@ -71,4 +71,4 @@ Após conectar o hardware e fazer o upload do código, o Raspberry Pi Pico come�
 
 ## Propósito
 
-Este projeto foi desenvolvido com fins estritamente educacionais durante uma residência em sistemas embarcados.
+Este projeto foi desenvolvido com fins estritamente educacionais e aprendizdo durante a residência em sistemas embarcados pelo embarcatech
